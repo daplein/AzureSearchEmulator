@@ -15,6 +15,8 @@ FROM build AS publish
 RUN dotnet publish --no-restore "AzureSearchEmulator.csproj" -c Release -o /app/publish
 
 FROM base AS final
+LABEL org.opencontainers.image.source="https://github.com/daplein/AzureSearchEmulator"
+LABEL org.opencontainers.image.licenses="AGPL-3.0"
 WORKDIR /app
 COPY --from=publish /app/publish .
 VOLUME [ "/app/indexes" ]

@@ -8,7 +8,7 @@ namespace AzureSearchEmulator.Controllers;
 
 public class DocumentSearchingController(
     IIndexSearcher indexSearcher,
-    ISearchIndexRepository searchIndexRepository)
+    IIndexResolver indexResolver)
     : ODataController
 {
     [HttpGet]
@@ -19,7 +19,7 @@ public class DocumentSearchingController(
         // Strip quotes that may be captured from OData-style URLs
         indexKey = indexKey.Trim('\'');
 
-        var index = await searchIndexRepository.Get(indexKey);
+        var index = await indexResolver.Get(indexKey);
 
         if (index == null)
         {
@@ -41,7 +41,7 @@ public class DocumentSearchingController(
         indexKey = indexKey.Trim('\'');
         key = key.Trim('\'');
 
-        var index = await searchIndexRepository.Get(indexKey);
+        var index = await indexResolver.Get(indexKey);
 
         if (index == null)
         {
@@ -132,7 +132,7 @@ public class DocumentSearchingController(
             return BadRequest(ModelState);
         }
 
-        var index = await searchIndexRepository.Get(indexKey);
+        var index = await indexResolver.Get(indexKey);
 
         if (index == null)
         {
@@ -217,7 +217,7 @@ public class DocumentSearchingController(
             return BadRequest(ModelState);
         }
 
-        var index = await searchIndexRepository.Get(indexKey);
+        var index = await indexResolver.Get(indexKey);
 
         if (index == null)
         {
@@ -295,7 +295,7 @@ public class DocumentSearchingController(
             return BadRequest(ModelState);
         }
 
-        var index = await searchIndexRepository.Get(indexKey);
+        var index = await indexResolver.Get(indexKey);
 
         if (index == null)
         {
